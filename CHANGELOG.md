@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.1] - 2021-05-01
 ### Added
+* Domain entity model [#2](https://github.com/cf-training-springboot-2019/spacemission-manager/issues/2)
 * Spaceover project standardized documentation [#1](https://github.com/cf-training-springboot-2019/spacemission-manager/issues/1)
 ### Changed
 ### Deprecated
