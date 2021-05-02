@@ -2,6 +2,6 @@ package com.springboot.training.spaceover.spacemission.manager.enums;
 
 public enum SpaceMissionStatus {
 
-    ACTIVE, INACTIVE
+    IN_PROGRESS, FAILED, ABORTED, ACCOMPLISHED, NOT_IN_PROGRESS
 
 }
