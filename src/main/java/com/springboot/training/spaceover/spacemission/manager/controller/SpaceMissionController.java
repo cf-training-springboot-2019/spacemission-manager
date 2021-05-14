@@ -1,25 +1,27 @@
 package com.springboot.training.spaceover.spacemission.manager.controller;
 
+import com.github.fge.jsonpatch.JsonPatch;
 import com.springboot.training.spaceover.spacemission.manager.domain.request.inbound.CreateSpaceMissionRequest;
-import com.springboot.training.spaceover.spacemission.manager.domain.request.inbound.UpdateSpaceMissionRequest;
+import com.springboot.training.spaceover.spacemission.manager.domain.request.inbound.PutSpaceMissionRequest;
 import com.springboot.training.spaceover.spacemission.manager.domain.response.outbound.GetSpaceMissionResponse;
-import com.springboot.training.spaceover.spacemission.manager.domain.response.outbound.UpdateSpaceMissionResponse;
-import org.springframework.data.domain.Page;
+import com.springboot.training.spaceover.spacemission.manager.domain.response.outbound.PatchSpaceMissionResponse;
+import com.springboot.training.spaceover.spacemission.manager.domain.response.outbound.PutSpaceMissionResponse;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
-
-import java.util.List;
 
 public interface SpaceMissionController {
 
-    ResponseEntity<Page<GetSpaceMissionResponse>> getSpaceCrewMembers(Pageable page, String name, String status, List<Long> ids);
+    ResponseEntity<PagedModel<GetSpaceMissionResponse>> getSpaceMissions(Pageable pageable, String name, String status, Long spaceShipId);
 
-    ResponseEntity<GetSpaceMissionResponse> getSpaceCrewMember(Long id);
+    ResponseEntity<GetSpaceMissionResponse> getSpaceMission(Long id);
 
-    ResponseEntity createSpaceCrewMember(CreateSpaceMissionRequest request);
+    ResponseEntity createSpaceMission(CreateSpaceMissionRequest request);
 
-    ResponseEntity<UpdateSpaceMissionResponse>  UpdateSpaceCrewMember(UpdateSpaceMissionRequest request);
+    ResponseEntity<PatchSpaceMissionResponse> patchSpaceMission(Long id, JsonPatch request);
 
-    ResponseEntity deleteSpaceCrewMember(Long id);
+    ResponseEntity<PutSpaceMissionResponse> putSpaceMission(Long id, PutSpaceMissionRequest request);
+
+    ResponseEntity deleteSpaceMission(Long id);
 
 }

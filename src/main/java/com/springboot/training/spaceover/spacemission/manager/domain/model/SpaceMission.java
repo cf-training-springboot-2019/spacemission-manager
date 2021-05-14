@@ -4,6 +4,7 @@ import com.springboot.training.spaceover.spacemission.manager.enums.SpaceMission
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +18,7 @@ import java.math.BigDecimal;
 @Data
 @Entity
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class SpaceMission extends Auditable<String> {
 
