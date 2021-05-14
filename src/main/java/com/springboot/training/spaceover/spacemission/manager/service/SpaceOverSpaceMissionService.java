@@ -47,7 +47,6 @@ public class SpaceOverSpaceMissionService implements SpaceMissionService {
     @Override
     public SpaceMission save(SpaceMission entity) {
         spaceShipClient.findBydId(entity.getSpaceShipId());
-        entity.setStatus(SpaceMissionStatus.NOT_IN_PROGRESS);
         return spaceMissionRepository.save(entity);
     }
 
