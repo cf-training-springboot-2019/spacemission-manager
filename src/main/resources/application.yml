@@ -4,7 +4,7 @@ application:
   version: @project.version@
 
 server:
-  port: 8081
+  port: 8080
 
 spring:
   application:
@@ -35,6 +35,12 @@ management:
   endpoint:
     health:
       show-details: always
+
+springdoc:
+  api-docs:
+    path: "/api-docs"
+  swagger-ui:
+    path: "/"
 
 open-api:
   header:
