@@ -1,0 +1,90 @@
+package com.springboot.training.spaceover.spacemission.manager.controller;
+
+import com.github.fge.jsonpatch.JsonPatch;
+import com.springboot.training.spaceover.spacemission.manager.domain.model.SpaceMission;
+import com.springboot.training.spaceover.spacemission.manager.domain.request.inbound.CreateSpaceMissionRequest;
+import com.springboot.training.spaceover.spacemission.manager.domain.request.inbound.PutSpaceMissionRequest;
+import com.springboot.training.spaceover.spacemission.manager.domain.response.outbound.GetSpaceMissionResponse;
+import com.springboot.training.spaceover.spacemission.manager.domain.response.outbound.PatchSpaceMissionResponse;
+import com.springboot.training.spaceover.spacemission.manager.domain.response.outbound.PutSpaceMissionResponse;
+import com.springboot.training.spaceover.spacemission.manager.enums.SpaceMissionStatus;
+import com.springboot.training.spaceover.spacemission.manager.service.SpaceMissionService;
+import com.springboot.training.spaceover.spacemission.manager.utils.assemblers.PaginationModelAssembler;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import static com.springboot.training.spaceover.spacemission.manager.utils.constants.SpaceMissionManagerConstant.*;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping(SPACE_MISSIONS_URI)
+public class SpaceOverSpaceMissionController extends SpaceOverGenericController implements SpaceMissionController {
+
+    private final SpaceMissionService spaceMissionService;
+
+    private final ModelMapper modelMapper;
+
+    private final PagedResourcesAssembler<SpaceMission> pagedModelAssembler;
+
+    private final PaginationModelAssembler modelAssembler;
+
+    @Override
+    @GetMapping
+    public ResponseEntity<PagedModel<GetSpaceMissionResponse>> getSpaceMissions(Pageable pageable,
+                                                                                @RequestParam(name = NAME_FIELD, required = false) String name,
+                                                                                @RequestParam(name = STATUS_FIELD, required = false) String status,
+                                                                                @RequestParam(name = SPACESHIP_ID_FIELD, required = false) Long spaceShipId) {
+        SpaceMission spaceMissionSample = SpaceMission.builder()
+                .name(name)
+                .status(SpaceMissionStatus.fromName(status))
+                .spaceShipId(spaceShipId)
+                .build();
+        Page<SpaceMission> spaceMissionPage = spaceMissionService.findAll(spaceMissionSample, pageable);
+        PagedModel<GetSpaceMissionResponse> response = pagedModelAssembler.toModel(spaceMissionPage, modelAssembler);
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
+    @GetMapping(ID_URI)
+    public ResponseEntity<GetSpaceMissionResponse> getSpaceMission(@PathVariable("id") Long id) {
+        GetSpaceMissionResponse response = modelMapper.map(spaceMissionService.findBydId(id), GetSpaceMissionResponse.class);
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
+    @PostMapping
+    public ResponseEntity createSpaceMission(@RequestBody CreateSpaceMissionRequest request) {
+        SpaceMission spaceMission = spaceMissionService.save(modelMapper.map(request, SpaceMission.class));
+        return ResponseEntity.created(getResourceUri(spaceMission.getId())).build();
+    }
+
+    @Override
+    @PatchMapping(value = ID_URI, consumes = APPLICATION_JSON_PATCH)
+    public ResponseEntity<PatchSpaceMissionResponse> patchSpaceMission(@PathVariable("id") Long id, @RequestBody JsonPatch patch) {
+        SpaceMission entity = spaceMissionService.findBydId(id);
+        entity = spaceMissionService.update(applyPatch(patch, entity));
+        return ResponseEntity.ok(modelMapper.map(entity, PatchSpaceMissionResponse.class));
+    }
+
+    @Override
+    @PutMapping(ID_URI)
+    public ResponseEntity<PutSpaceMissionResponse> putSpaceMission(@PathVariable("id") Long id, @RequestBody PutSpaceMissionRequest request) {
+        request.setId(id);
+        SpaceMission entity = spaceMissionService.update(modelMapper.map(request, SpaceMission.class));
+        return ResponseEntity.ok(modelMapper.map(entity, PutSpaceMissionResponse.class));
+    }
+
+    @Override
+    public ResponseEntity deleteSpaceMission(@PathVariable("id") Long id) {
+        spaceMissionService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
+}
