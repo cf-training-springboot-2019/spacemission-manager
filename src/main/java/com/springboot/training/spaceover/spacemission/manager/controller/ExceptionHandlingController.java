@@ -32,7 +32,7 @@ import static java.util.stream.Collectors.joining;
 @RequiredArgsConstructor
 public class ExceptionHandlingController implements ResponseBodyAdvice<Object> {
 
-    private final SpaceMissionManagerProperties spaceShipManagerProperties;
+    private final SpaceMissionManagerProperties spaceMissionManagerProperties;
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(EntityNotFoundException.class)
@@ -95,7 +95,7 @@ public class ExceptionHandlingController implements ResponseBodyAdvice<Object> {
                                   Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest serverHttpRequest,
                                   ServerHttpResponse serverHttpResponse) {
 
-        if (body instanceof PagedModel<?> && spaceShipManagerProperties.isOpenApiHeaderPaginationEnabled()) {
+        if (body instanceof PagedModel<?> && spaceMissionManagerProperties.isOpenApiHeaderPaginationEnabled()) {
             PagedModel pagedModel = (PagedModel) body;
             serverHttpResponse.getHeaders()
                     .add(LINK_HEADER, pagedModel.getLinks().stream().map(Link::toString).collect(joining(SEMI_COLON_DELIMITER)));
