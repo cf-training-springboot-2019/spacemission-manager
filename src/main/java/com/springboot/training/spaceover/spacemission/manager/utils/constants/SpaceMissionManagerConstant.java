@@ -67,6 +67,15 @@ public class SpaceMissionManagerConstant {
     public static final String STATUS_FIELD = "status";
     public static final String SPACESHIP_ID_FIELD = "spaceShipId";
 
+    /**
+     * OpenAPI
+     */
+    public static final String GET_SPACE_MISSIONS_SERVICE_OPERATION_DESCRIPTION = "Synchronous operation that allows the retrieval of multiples persisted space mission resource entries.";
+    public static final String GET_SPACE_MISSION_SERVICE_OPERATION_DESCRIPTION = "Synchronous operation that allows the retrieval of a single persisted space mission resource entry.";
+    public static final String CREATE_SPACE_MISSION_SERVICE_OPERATION_DESCRIPTION = "Synchronous operation that allows the persistence of a single space mission resource entry.";
+    public static final String PATCH_SPACE_MISSION_SERVICE_OPERATION_DESCRIPTION = "Synchronous operation that allows the partial update of a single space mission persisted resource entry.";
+    public static final String PUT_SPACE_MISSION_SERVICE_OPERATION_DESCRIPTION = "Synchronous operation that allows the full update of a single space mission resource entry.";
+    public static final String DELETE_SPACE_MISSION_SERVICE_OPERATION_DESCRIPTION = "Synchronous operation that allows the removal of a single space mission resource entry.";
 
     /**
      * Miscellaneous

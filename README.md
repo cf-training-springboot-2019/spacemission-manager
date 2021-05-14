@@ -13,11 +13,12 @@ The application uses Spring Boot parent bom version 2.4.5 as its foundation.
 ## Operations
 | Name | Description |
 |:----------:|:-------------|
-| getSpaceMissions | Synchronous operation that allows the retrieval of multiples persisted space crew member resource entries. |
-| getSpaceMission |  Synchronous operation that allows the retrieval of a single persisted space crew member resource entry. |
-| createSpaceMission |  Synchronous operation that allows the persistence of a single space crew member resource entry. |
-| updateSpaceMission| Synchronous operation that allows the update of a single space crew member persisted resource entry. |
-| deleteSpaceMission | Synchronous operation that allows the removal of a single space crew member persisted resource entry. |
+| getSpaceMissions | Synchronous operation that allows the retrieval of multiples persisted space mission resource entries. |
+| getSpaceMission |  Synchronous operation that allows the retrieval of a single persisted space mission resource entry. |
+| createSpaceMission |  Synchronous operation that allows the persistence of a single space mission resource entry. |
+| patchSpaceMission| Synchronous operation that allows the partial update of a single space mission persisted resource entry. |
+| putSpaceMission| Synchronous operation that allows the full update of a single space mission resource entry. |
+| deleteSpaceMission | Synchronous operation that allows the removal of a single space mission resource entry. |
 
 ## Getting Started
 
