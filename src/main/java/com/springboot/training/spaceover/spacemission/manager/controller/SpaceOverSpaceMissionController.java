@@ -61,8 +61,8 @@ public class SpaceOverSpaceMissionController extends SpaceOverGenericController 
                 .spaceShipId(spaceShipId)
                 .build();
         Page<SpaceMission> spaceMissionPage = spaceMissionService.findAll(spaceMissionSample, pageable);
-        log.info(GET_SPACE_MISSIONS_RESULT_MSG, spaceMissionPage.getNumberOfElements(), spaceMissionPage.getTotalElements());
         PagedModel<GetSpaceMissionResponse> response = pagedModelAssembler.toModel(spaceMissionPage, modelAssembler);
+        log.info(GET_SPACE_MISSIONS_RESULT_MSG, spaceMissionPage.getNumberOfElements(), spaceMissionPage.getTotalElements());
         return ResponseEntity.ok(response);
     }
 
@@ -71,7 +71,7 @@ public class SpaceOverSpaceMissionController extends SpaceOverGenericController 
     @ServiceOperation(GET_SPACE_MISSION_SERVICE_OPERATION)
     @Operation(summary = GET_SPACE_MISSION_SERVICE_OPERATION, description = GET_SPACE_MISSION_SERVICE_OPERATION_DESCRIPTION)
     public ResponseEntity<GetSpaceMissionResponse> getSpaceMission(@PathVariable("id") Long id) {
-        log.trace(GET_SPACE_MISSION_REQUEST_MSG);
+        log.trace(GET_SPACE_MISSION_REQUEST_MSG, id);
         GetSpaceMissionResponse response = modelMapper.map(spaceMissionService.findBydId(id), GetSpaceMissionResponse.class);
         log.info(GET_SPACE_MISSION_RESULT_MSG, id);
         return ResponseEntity.ok(response);
@@ -94,10 +94,10 @@ public class SpaceOverSpaceMissionController extends SpaceOverGenericController 
     @ServiceOperation(PATCH_SPACE_MISSION_SERVICE_OPERATION)
     @Operation(summary = PATCH_SPACE_MISSION_SERVICE_OPERATION, description = PATCH_SPACE_MISSION_SERVICE_OPERATION_DESCRIPTION)
     public ResponseEntity<PatchSpaceMissionResponse> patchSpaceMission(@PathVariable("id") Long id, @RequestBody JsonPatch patch) {
-        log.trace(PATCH_SPACE_MISSION_REQUEST_MSG);
+        log.trace(PATCH_SPACE_MISSION_REQUEST_MSG, id);
         SpaceMission entity = spaceMissionService.findBydId(id);
         entity = spaceMissionService.update(applyPatch(patch, entity));
-        log.info(PATCH_SPACE_MISSION_RESULT_MSG);
+        log.info(PATCH_SPACE_MISSION_RESULT_MSG, id);
         return ResponseEntity.ok(modelMapper.map(entity, PatchSpaceMissionResponse.class));
     }
 
@@ -106,10 +106,10 @@ public class SpaceOverSpaceMissionController extends SpaceOverGenericController 
     @ServiceOperation(PUT_SPACE_MISSION_SERVICE_OPERATION)
     @Operation(summary = PUT_SPACE_MISSION_SERVICE_OPERATION, description = PUT_SPACE_MISSION_SERVICE_OPERATION_DESCRIPTION)
     public ResponseEntity<PutSpaceMissionResponse> putSpaceMission(@PathVariable("id") Long id, @RequestBody @Valid PutSpaceMissionRequest request) {
-        log.trace(PUT_SPACE_MISSION_REQUEST_MSG);
+        log.trace(PUT_SPACE_MISSION_REQUEST_MSG, id);
         request.setId(id);
         SpaceMission entity = spaceMissionService.update(modelMapper.map(request, SpaceMission.class));
-        log.info(PUT_SPACE_MISSION_RESULT_MSG);
+        log.info(PUT_SPACE_MISSION_RESULT_MSG, id);
         return ResponseEntity.ok(modelMapper.map(entity, PutSpaceMissionResponse.class));
     }
 
@@ -119,9 +119,9 @@ public class SpaceOverSpaceMissionController extends SpaceOverGenericController 
     @ServiceOperation(DELETE_SPACE_MISSION_SERVICE_OPERATION)
     @Operation(summary = DELETE_SPACE_MISSION_SERVICE_OPERATION, description = DELETE_SPACE_MISSION_SERVICE_OPERATION_DESCRIPTION)
     public ResponseEntity deleteSpaceMission(@PathVariable("id") Long id) {
-        log.trace(DELETE_SPACE_MISSION_REQUEST_MSG);
+        log.trace(DELETE_SPACE_MISSION_REQUEST_MSG, id);
         spaceMissionService.deleteById(id);
-        log.info(DELETE_SPACE_MISSION_RESULT_MSG);
+        log.info(DELETE_SPACE_MISSION_RESULT_MSG, id);
         return ResponseEntity.noContent().build();
     }
 

@@ -41,7 +41,7 @@ public class SpaceMissionManagerConstant {
      */
     public static final String GET_SPACE_MISSIONS_REQUEST_MSG = "Getting space missions";
     public static final String GET_SPACE_MISSIONS_RESULT_MSG = "Got {} space missions out of {}";
-    public static final String GET_SPACE_MISSION_REQUEST_MSG = "Getting space mission";
+    public static final String GET_SPACE_MISSION_REQUEST_MSG = "Getting space mission id::{}";
     public static final String GET_SPACE_MISSION_RESULT_MSG = "Got space mission id::{}";
     public static final String CREATE_SPACE_MISSION_REQUEST_MSG = "Creating space mission";
     public static final String CREATE_SPACE_MISSION_RESULT_MSG = "Created space mission id::{}";
