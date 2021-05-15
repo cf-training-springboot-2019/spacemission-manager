@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @RequiredArgsConstructor
-public class SpaceshipManagerWebConfiguration {
+public class SpaceMissionManagerWebConfiguration {
 
     @Bean
     public WebMvcConfigurer webMvcConfigurationInitializer(MdcInitInterceptor mdcInitHandler, HttpHeaderEnrichmentInterceptor headerEnrichmentHandlerInterceptor) {
