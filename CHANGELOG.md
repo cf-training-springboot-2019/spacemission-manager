@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.1] - 2021-05-01
 ### Added
+* Standardized logging capabilities [#18](https://github.com/cf-training-springboot-2019/spacemission-manager/issues/18)
 * Response header enrichment [#15](https://github.com/cf-training-springboot-2019/spacemission-manager/issues/15)
 * Swagger OpenAPI specification [#13](https://github.com/cf-training-springboot-2019/spacemission-manager/issues/13)
 * Global exception handling [#10](https://github.com/cf-training-springboot-2019/spacemission-manager/issues/10)

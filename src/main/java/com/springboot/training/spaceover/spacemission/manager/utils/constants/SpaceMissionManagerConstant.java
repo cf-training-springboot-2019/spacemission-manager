@@ -39,20 +39,18 @@ public class SpaceMissionManagerConstant {
     /**
      * Messages
      */
-    public static final String GET_SPACE_MISSIONS_MSG = "Getting space missions";
-    public static final String GET_SPACE_MISSIONS_COUNT_MSG = "Got {} space missions out of {}";
-    public static final String GET_SPACE_MISSION_MSG = "Getting space mission";
+    public static final String GET_SPACE_MISSIONS_REQUEST_MSG = "Getting space missions";
+    public static final String GET_SPACE_MISSIONS_RESULT_MSG = "Got {} space missions out of {}";
+    public static final String GET_SPACE_MISSION_REQUEST_MSG = "Getting space mission";
     public static final String GET_SPACE_MISSION_RESULT_MSG = "Got space mission id::{}";
-    public static final String CREATE_SPACE_MISSION_MSG = "Creating space mission";
+    public static final String CREATE_SPACE_MISSION_REQUEST_MSG = "Creating space mission";
     public static final String CREATE_SPACE_MISSION_RESULT_MSG = "Created space mission id::{}";
-    public static final String UPDATE_SPACE_MISSION_MSG = "Updating space mission id::{}";
-    public static final String UPDATE_SPACE_MISSION_RESULT_MSG = "Updated space mission id::{}";
-    public static final String DELETE_SPACE_MISSION_MSG = "Deleting space mission id::{}";
+    public static final String PATCH_SPACE_MISSION_REQUEST_MSG = "Patching space mission id::{}";
+    public static final String PATCH_SPACE_MISSION_RESULT_MSG = "Patched space mission id::{}";
+    public static final String PUT_SPACE_MISSION_REQUEST_MSG = "Putting space mission id::{}";
+    public static final String PUT_SPACE_MISSION_RESULT_MSG = "Put space mission id::{}";
+    public static final String DELETE_SPACE_MISSION_REQUEST_MSG = "Deleting space mission id::{}";
     public static final String DELETE_SPACE_MISSION_RESULT_MSG = "Deleted space mission id::{}";
-    public static final String RESTOCK_SPACE_MISSION_MSG = "Restocking space mission id::{}";
-    public static final String RESTOCK_SPACE_MISSION_RESULT_MSG = "Restocked space mission id::{} by amount {}";
-    public static final String DISPATCH_SPACE_MISSION_MSG = "Dispatching space mission id::{}";
-    public static final String DISPATCH_SPACE_MISSION_RESULT_MSG = "Dispatched space mission id::{} by amount {}";
     public static final String LOGGING_HANDLER_INBOUND_MSG = "Received HTTP {} Request to {} at {}";
     public static final String LOGGING_HANDLER_OUTBOUND_MSG = "Responded with Status {} at {}";
     public static final String LOGGING_HANDLER_PROCESS_TIME_MSG = "Total processing time {} ms";
