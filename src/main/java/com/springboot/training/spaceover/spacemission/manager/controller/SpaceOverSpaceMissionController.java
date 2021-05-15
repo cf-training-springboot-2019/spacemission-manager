@@ -9,6 +9,7 @@ import com.springboot.training.spaceover.spacemission.manager.domain.response.ou
 import com.springboot.training.spaceover.spacemission.manager.domain.response.outbound.PutSpaceMissionResponse;
 import com.springboot.training.spaceover.spacemission.manager.enums.SpaceMissionStatus;
 import com.springboot.training.spaceover.spacemission.manager.service.SpaceMissionService;
+import com.springboot.training.spaceover.spacemission.manager.utils.annotatations.ServiceOperation;
 import com.springboot.training.spaceover.spacemission.manager.utils.assemblers.PaginationModelAssembler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -45,6 +46,7 @@ public class SpaceOverSpaceMissionController extends SpaceOverGenericController 
     @Override
     @GetMapping
     @PageableAsQueryParam
+    @ServiceOperation(GET_SPACE_MISSIONS_SERVICE_OPERATION)
     @Operation(summary = GET_SPACE_MISSIONS_SERVICE_OPERATION, description = GET_SPACE_MISSIONS_SERVICE_OPERATION_DESCRIPTION)
     public ResponseEntity<PagedModel<GetSpaceMissionResponse>> getSpaceMissions(@Parameter(hidden = true) Pageable pageable,
                                                                                 @RequestParam(name = NAME_FIELD, required = false) String name,
@@ -62,6 +64,7 @@ public class SpaceOverSpaceMissionController extends SpaceOverGenericController 
 
     @Override
     @GetMapping(ID_URI)
+    @ServiceOperation(GET_SPACE_MISSION_SERVICE_OPERATION)
     @Operation(summary = GET_SPACE_MISSION_SERVICE_OPERATION, description = GET_SPACE_MISSION_SERVICE_OPERATION_DESCRIPTION)
     public ResponseEntity<GetSpaceMissionResponse> getSpaceMission(@PathVariable("id") Long id) {
         GetSpaceMissionResponse response = modelMapper.map(spaceMissionService.findBydId(id), GetSpaceMissionResponse.class);
@@ -71,6 +74,7 @@ public class SpaceOverSpaceMissionController extends SpaceOverGenericController 
     @Override
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @ServiceOperation(CREATE_SPACE_MISSION_SERVICE_OPERATION)
     @Operation(summary = CREATE_SPACE_MISSION_SERVICE_OPERATION, description = CREATE_SPACE_MISSION_SERVICE_OPERATION_DESCRIPTION)
     public ResponseEntity createSpaceMission(@RequestBody @Valid CreateSpaceMissionRequest request) {
         SpaceMission spaceMission = spaceMissionService.save(modelMapper.map(request, SpaceMission.class));
@@ -79,6 +83,7 @@ public class SpaceOverSpaceMissionController extends SpaceOverGenericController 
 
     @Override
     @PatchMapping(value = ID_URI, consumes = APPLICATION_JSON_PATCH)
+    @ServiceOperation(PATCH_SPACE_MISSION_SERVICE_OPERATION)
     @Operation(summary = PATCH_SPACE_MISSION_SERVICE_OPERATION, description = PATCH_SPACE_MISSION_SERVICE_OPERATION_DESCRIPTION)
     public ResponseEntity<PatchSpaceMissionResponse> patchSpaceMission(@PathVariable("id") Long id, @RequestBody JsonPatch patch) {
         SpaceMission entity = spaceMissionService.findBydId(id);
@@ -88,6 +93,7 @@ public class SpaceOverSpaceMissionController extends SpaceOverGenericController 
 
     @Override
     @PutMapping(ID_URI)
+    @ServiceOperation(PUT_SPACE_MISSION_SERVICE_OPERATION)
     @Operation(summary = PUT_SPACE_MISSION_SERVICE_OPERATION, description = PUT_SPACE_MISSION_SERVICE_OPERATION_DESCRIPTION)
     public ResponseEntity<PutSpaceMissionResponse> putSpaceMission(@PathVariable("id") Long id, @RequestBody @Valid PutSpaceMissionRequest request) {
         request.setId(id);
@@ -98,6 +104,7 @@ public class SpaceOverSpaceMissionController extends SpaceOverGenericController 
     @Override
     @DeleteMapping(ID_URI)
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ServiceOperation(DELETE_SPACE_MISSION_SERVICE_OPERATION)
     @Operation(summary = DELETE_SPACE_MISSION_SERVICE_OPERATION, description = DELETE_SPACE_MISSION_SERVICE_OPERATION_DESCRIPTION)
     public ResponseEntity deleteSpaceMission(@PathVariable("id") Long id) {
         spaceMissionService.deleteById(id);
