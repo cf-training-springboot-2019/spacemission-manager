@@ -11,16 +11,10 @@ import static com.springboot.training.spaceover.spacemission.manager.utils.const
 @RequiredArgsConstructor
 public class WebClientSpaceShipClient implements SpaceShipClient {
 
-    private final WebClient.Builder webClientBuilder;
-
-    private final SpaceMissionManagerProperties spaceMissionManagerProperties;
-
+    private final WebClient webClient;
 
     @Override
     public GetSpaceShipResponse findBydId(Long id) {
-        WebClient webClient = webClientBuilder.baseUrl(spaceMissionManagerProperties.getSpaceshipManagerBaseUrl())
-                .build();
-
         return webClient.get()
                 .uri(SPACESHIPS)
                 .retrieve()

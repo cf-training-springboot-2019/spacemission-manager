@@ -1,7 +1,6 @@
 package com.springboot.training.spaceover.spacemission.manager.service;
 
 import com.springboot.training.spaceover.spacemission.manager.domain.model.SpaceMission;
-import com.springboot.training.spaceover.spacemission.manager.enums.SpaceMissionStatus;
 import com.springboot.training.spaceover.spacemission.manager.repository.SpaceMissionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
