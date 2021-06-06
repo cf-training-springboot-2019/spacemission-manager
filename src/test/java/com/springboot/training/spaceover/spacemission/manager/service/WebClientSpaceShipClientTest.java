@@ -41,7 +41,7 @@ class WebClientSpaceShipClientTest {
         WebClient.ResponseSpec responseSpec = mock(WebClient.ResponseSpec.class);
 
         when(webClient.get()).thenReturn(uriSpec);
-        when(uriSpec.uri("spaceships")).thenReturn(uriSpec);
+        when(uriSpec.uri("spaceships/1")).thenReturn(uriSpec);
         when(uriSpec.retrieve()).thenReturn(responseSpec);
         when(responseSpec.bodyToMono(GetSpaceShipResponse.class)).thenReturn(Mono.just(spaceShipResponse));
 
