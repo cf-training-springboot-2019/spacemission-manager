@@ -1,0 +1,6 @@
+{
+  "name": "Retrieve the Millennium Falcon",
+  "spaceShipId": 2,
+  "status": "ACCOMPLISHED",
+  "revenue": 10000
+}
