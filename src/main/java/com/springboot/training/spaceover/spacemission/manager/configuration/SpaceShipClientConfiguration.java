@@ -16,7 +16,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 @RequiredArgsConstructor
 public class SpaceShipClientConfiguration {
 
-    private SpaceMissionManagerProperties spaceMissionManagerProperties;
+    private final SpaceMissionManagerProperties spaceMissionManagerProperties;
 
     @Bean
     @ConditionalOnProperty(name = "spaceship-manager.client.provider", havingValue = "rest-template", matchIfMissing = true)
