@@ -1,10 +1,10 @@
 application:
-  name: @project.artifactId@
-  description: @project.description@
-  version: @project.version@
+  name: '@project.artifactId@'
+  description: '@project.description@'
+  version: '@project.version@'
 
 server:
-  port: 8080
+  port: 8081
 
 spring:
   application:
@@ -45,4 +45,4 @@ springdoc:
 open-api:
   header:
     pagination:
-      enabled: false
+      enabled: true

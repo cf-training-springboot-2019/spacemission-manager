@@ -11,6 +11,7 @@ public class SpaceMissionManagerConstant {
     public static final String PATCH_SPACE_MISSION_SERVICE_OPERATION = "PatchSpaceMission";
     public static final String PUT_SPACE_MISSION_SERVICE_OPERATION = "PutSpaceMission";
     public static final String DELETE_SPACE_MISSION_SERVICE_OPERATION = "DeleteSpaceMission";
+    public static final String CALCULATE_SPACE_SHIPS_TOTAL_REVENUE_SERVICE_OPERATION = "CalculateSpaceShipsTotalRevenue";
     public static final String UNDEFINED_SERVICE_OPERATION = "Undefined";
 
     /**
@@ -74,6 +75,7 @@ public class SpaceMissionManagerConstant {
     public static final String PATCH_SPACE_MISSION_SERVICE_OPERATION_DESCRIPTION = "Synchronous operation that allows the partial update of a single space mission persisted resource entry.";
     public static final String PUT_SPACE_MISSION_SERVICE_OPERATION_DESCRIPTION = "Synchronous operation that allows the full update of a single space mission resource entry.";
     public static final String DELETE_SPACE_MISSION_SERVICE_OPERATION_DESCRIPTION = "Synchronous operation that allows the removal of a single space mission resource entry.";
+    public static final String CALCULATE_SPACE_SHIPS_TOTAL_REVENUE_SERVICE_OPERATION_DESCRIPTION = "Synchronous operation that allows to calculate the total of each spaceship's revenue.";
 
     /**
      * Miscellaneous

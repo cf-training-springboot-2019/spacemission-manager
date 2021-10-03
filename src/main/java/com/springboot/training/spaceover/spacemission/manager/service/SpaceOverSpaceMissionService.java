@@ -1,6 +1,7 @@
 package com.springboot.training.spaceover.spacemission.manager.service;
 
 import com.springboot.training.spaceover.spacemission.manager.domain.model.SpaceMission;
+import com.springboot.training.spaceover.spacemission.manager.domain.model.SpaceShipTotalRevenue;
 import com.springboot.training.spaceover.spacemission.manager.repository.SpaceMissionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
@@ -58,5 +59,10 @@ public class SpaceOverSpaceMissionService implements SpaceMissionService {
     @Override
     public void deleteById(Long id) {
         spaceMissionRepository.deleteById(id);
+    }
+
+    @Override
+    public List<SpaceShipTotalRevenue> calculateSpaceShipsTotalRevenue() {
+        return spaceMissionRepository.calculateSpaceShipsTotalRevenue();
     }
 }

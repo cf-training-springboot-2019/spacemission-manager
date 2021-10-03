@@ -1,6 +1,7 @@
 package com.springboot.training.spaceover.spacemission.manager.controller;
 
 import com.github.fge.jsonpatch.JsonPatch;
+import com.springboot.training.spaceover.spacemission.manager.domain.model.SpaceShipTotalRevenue;
 import com.springboot.training.spaceover.spacemission.manager.domain.model.SpaceMission;
 import com.springboot.training.spaceover.spacemission.manager.domain.request.inbound.CreateSpaceMissionRequest;
 import com.springboot.training.spaceover.spacemission.manager.domain.request.inbound.PutSpaceMissionRequest;
@@ -27,6 +28,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 import static com.springboot.training.spaceover.spacemission.manager.utils.constants.SpaceMissionManagerConstant.*;
 
@@ -125,5 +127,14 @@ public class SpaceOverSpaceMissionController extends SpaceOverGenericController 
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/spaceShipTotalRevenue")
+    @ResponseStatus(HttpStatus.OK)
+    @ServiceOperation(CALCULATE_SPACE_SHIPS_TOTAL_REVENUE_SERVICE_OPERATION)
+    @Operation(summary = CALCULATE_SPACE_SHIPS_TOTAL_REVENUE_SERVICE_OPERATION, description = CALCULATE_SPACE_SHIPS_TOTAL_REVENUE_SERVICE_OPERATION_DESCRIPTION)
+    public ResponseEntity<List<SpaceShipTotalRevenue>> getSpaceMissionRevenues() {
+        return ResponseEntity.ok(spaceMissionService.calculateSpaceShipsTotalRevenue());
+    }
 
-}
+
+
+    }
