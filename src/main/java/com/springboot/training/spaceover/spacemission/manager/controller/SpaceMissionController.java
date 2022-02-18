@@ -6,13 +6,13 @@ import com.springboot.training.spaceover.spacemission.manager.domain.request.inb
 import com.springboot.training.spaceover.spacemission.manager.domain.response.outbound.GetSpaceMissionResponse;
 import com.springboot.training.spaceover.spacemission.manager.domain.response.outbound.PatchSpaceMissionResponse;
 import com.springboot.training.spaceover.spacemission.manager.domain.response.outbound.PutSpaceMissionResponse;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 
 public interface SpaceMissionController {
 
-    ResponseEntity<PagedModel<GetSpaceMissionResponse>> getSpaceMissions(Pageable pageable, String name, String status, Long spaceShipId);
+    ResponseEntity<Page<GetSpaceMissionResponse>> getSpaceMissions(Pageable pageable, String name, String status, Long spaceShipId);
 
     ResponseEntity<GetSpaceMissionResponse> getSpaceMission(Long id);
 

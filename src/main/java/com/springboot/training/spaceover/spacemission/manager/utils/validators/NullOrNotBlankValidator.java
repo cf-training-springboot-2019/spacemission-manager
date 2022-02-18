@@ -1,7 +1,6 @@
 package com.springboot.training.spaceover.spacemission.manager.utils.validators;
 
 import com.springboot.training.spaceover.spacemission.manager.utils.annotatations.NullOrNotBlank;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
