@@ -1,4 +1,4 @@
-# spacecrew-manager
+# spacemission-manager
 [![License](https://img.shields.io/github/license/cf-training-springboot-2019/spacecrew-manager)](https://github.com/cf-training-springboot-2019/y/blob/master/LICENSE)
 
 A small Spring microservice aimed towards both governance, management and operational tasks applied towards for the various space mission resources within the Spaceover platform.
