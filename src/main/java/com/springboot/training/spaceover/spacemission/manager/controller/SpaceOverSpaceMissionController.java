@@ -28,12 +28,14 @@ import com.springboot.training.spaceover.spacemission.manager.domain.request.inb
 import com.springboot.training.spaceover.spacemission.manager.domain.response.outbound.GetSpaceMissionResponse;
 import com.springboot.training.spaceover.spacemission.manager.domain.response.outbound.PatchSpaceMissionResponse;
 import com.springboot.training.spaceover.spacemission.manager.domain.response.outbound.PutSpaceMissionResponse;
+import com.springboot.training.spaceover.spacemission.manager.enums.SpaceMissionStatus;
 import com.springboot.training.spaceover.spacemission.manager.service.SpaceMissionService;
 import com.springboot.training.spaceover.spacemission.manager.utils.annotatations.ServiceOperation;
 import com.springboot.training.spaceover.spacemission.manager.utils.assemblers.PaginationModelAssembler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
@@ -80,8 +82,14 @@ public class SpaceOverSpaceMissionController extends SpaceOverGenericController 
 
         //LT3.3-Include request pagination
         //LT3.4-Include example matching
-        Page<SpaceMission> spaceMissionPage = null;
-        Page<GetSpaceMissionResponse> responsePage = null;
+        SpaceMission sample = SpaceMission.builder()
+            .name(name)
+            .status(SpaceMissionStatus.fromName(status))
+            .spaceShipId(spaceShipId)
+            .build();
+        Page<SpaceMission> spaceMissionPage = spaceMissionService.findAll(sample, pageable);
+        Page<GetSpaceMissionResponse> responsePage = spaceMissionPage
+            .map(m ->modelAssembler.toModel(m));
         return ResponseEntity.ok(responsePage);
     }
 
@@ -90,8 +98,8 @@ public class SpaceOverSpaceMissionController extends SpaceOverGenericController 
     @ServiceOperation(GET_SPACE_MISSION_SERVICE_OPERATION)
     @Operation(summary = GET_SPACE_MISSION_SERVICE_OPERATION, description = GET_SPACE_MISSION_SERVICE_OPERATION_DESCRIPTION)
     public ResponseEntity<GetSpaceMissionResponse> getSpaceMission(@PathVariable("id") Long id) {
-        GetSpaceMissionResponse response = modelMapper.map(spaceMissionService.findBydId(id), GetSpaceMissionResponse.class);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(modelMapper.map(spaceMissionService.findBydId(id), GetSpaceMissionResponse.class));
+
     }
 
     @Override
@@ -99,7 +107,7 @@ public class SpaceOverSpaceMissionController extends SpaceOverGenericController 
     @ResponseStatus(HttpStatus.CREATED)
     @ServiceOperation(CREATE_SPACE_MISSION_SERVICE_OPERATION)
     @Operation(summary = CREATE_SPACE_MISSION_SERVICE_OPERATION, description = CREATE_SPACE_MISSION_SERVICE_OPERATION_DESCRIPTION)
-    public ResponseEntity createSpaceMission(@RequestBody CreateSpaceMissionRequest request) { // LT2.1-Include request validation
+    public ResponseEntity createSpaceMission(@Valid @RequestBody CreateSpaceMissionRequest request) { // LT2.1-Include request validation
         SpaceMission spaceMission = spaceMissionService.save(modelMapper.map(request, SpaceMission.class));
         return ResponseEntity.created(getResourceUri(spaceMission.getId())).build();
     }
@@ -118,7 +126,7 @@ public class SpaceOverSpaceMissionController extends SpaceOverGenericController 
     @PutMapping(ID_URI)
     @ServiceOperation(PUT_SPACE_MISSION_SERVICE_OPERATION)
     @Operation(summary = PUT_SPACE_MISSION_SERVICE_OPERATION, description = PUT_SPACE_MISSION_SERVICE_OPERATION_DESCRIPTION)
-    public ResponseEntity<PutSpaceMissionResponse> putSpaceMission(@PathVariable("id") Long id, @RequestBody PutSpaceMissionRequest request) { // LT2.1-Include request validation
+    public ResponseEntity<PutSpaceMissionResponse> putSpaceMission(@PathVariable("id") Long id, @Valid @RequestBody PutSpaceMissionRequest request) { // LT2.1-Include request validation
         request.setId(id);
         SpaceMission entity = spaceMissionService.update(modelMapper.map(request, SpaceMission.class));
         return ResponseEntity.ok(modelMapper.map(entity, PutSpaceMissionResponse.class));

@@ -8,9 +8,12 @@ import com.springboot.training.spaceover.spacemission.manager.repository.SpaceMi
 import java.util.List;
 import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +27,11 @@ public class SpaceOverSpaceMissionService implements SpaceMissionService {
     //LT3.3-Include request pagination
     //LT3.4-Include example matching
     public Page<SpaceMission> findAll(SpaceMission entitySample, Pageable pageRequest) {
-        return null;
+        ExampleMatcher exampleMatcher = ExampleMatcher.matching()
+            .withMatcher("name", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
+            .withMatcher("status", ExampleMatcher.GenericPropertyMatchers.exact())
+            .withMatcher("spaceShipId", ExampleMatcher.GenericPropertyMatchers.exact());
+        return spaceMissionRepository.findAll(Example.of(entitySample, exampleMatcher), pageRequest);
     }
 
     @Override
@@ -40,6 +47,7 @@ public class SpaceOverSpaceMissionService implements SpaceMissionService {
 
     @Override
     //LT3.2-Modify save method to be transactional
+    @Transactional
     public SpaceMission save(SpaceMission entity) {
         entity = spaceMissionRepository.save(entity);
         spaceShipClient.findBydId(entity.getSpaceShipId());
