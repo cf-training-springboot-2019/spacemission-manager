@@ -22,16 +22,13 @@ import static com.springboot.training.spaceover.spacemission.manager.utils.const
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
+//LT10-2-Add unit test to the service layer
 class SpaceOverSpaceMissionServiceTest {
 
-    @InjectMocks
     private SpaceOverSpaceMissionService spaceMissionService;
 
-    @Mock
     private SpaceMissionRepository spaceMissionRepository;
 
-    @Mock
     private SpaceShipClient spaceShipClient;
 
     @Test
@@ -64,42 +61,21 @@ class SpaceOverSpaceMissionServiceTest {
                 .status(SpaceMissionStatus.ACCOMPLISHED)
                 .build();
 
-        when(spaceMissionRepository.findAll()).thenReturn(Arrays.asList(spaceMissionOne, spaceMissionTwo, spaceMissionThree));
+        when(spaceMissionRepository.findAll());
 
         //Act
         List<SpaceMission> spaceMissionList = spaceMissionService.findAll();
 
         //Assert
         //Assert collection
-        assertNotNull(spaceMissionList);
-        assertEquals(3, spaceMissionList.size());
+
 
         //Assert first spaceship
-        assertNotNull(spaceMissionList.get(0));
-        assertEquals(1L, spaceMissionList.get(0).getId());
-        assertEquals("Retrieve the Millennium Falcon", spaceMissionList.get(0).getName());
-        assertNull(spaceMissionList.get(0).getDetails());
-        assertEquals(2L, spaceMissionList.get(0).getSpaceShipId());
-        assertEquals(SpaceMissionStatus.IN_PROGRESS, spaceMissionList.get(0).getStatus());
-        assertEquals(0, BigDecimal.valueOf(10000L).compareTo(spaceMissionList.get(0).getRevenue()));
 
         //Assert second spaceship
-        assertNotNull(spaceMissionList.get(1));
-        assertEquals(2L, spaceMissionList.get(1).getId());
-        assertEquals("Retrieve the Red Fox", spaceMissionList.get(1).getName());
-        assertNull(spaceMissionList.get(1).getDetails());
-        assertEquals(1L, spaceMissionList.get(1).getSpaceShipId());
-        assertEquals(SpaceMissionStatus.NOT_IN_PROGRESS, spaceMissionList.get(1).getStatus());
-        assertEquals(0, BigDecimal.valueOf(1000L).compareTo(spaceMissionList.get(1).getRevenue()));
 
         //Assert third spaceship
-        assertNotNull(spaceMissionList.get(2));
-        assertEquals(3L, spaceMissionList.get(2).getId());
-        assertEquals("Destroy the Death Star", spaceMissionList.get(2).getName());
-        assertEquals("Blow it up!", spaceMissionList.get(2).getDetails());
-        assertEquals(1L, spaceMissionList.get(2).getSpaceShipId());
-        assertEquals(SpaceMissionStatus.ACCOMPLISHED, spaceMissionList.get(2).getStatus());
-        assertEquals(0, BigDecimal.valueOf(0L).compareTo(spaceMissionList.get(2).getRevenue()));
+
     }
 
     @Test
@@ -145,45 +121,18 @@ class SpaceOverSpaceMissionServiceTest {
         Pageable pageRequest = PageRequest.of(0, 3);
 
         //Act
-        when(spaceMissionRepository.findAll(spaceMissionExample, pageRequest))
-                .thenReturn(new PageImpl<>(spaceMissionList, pageRequest, 5));
+        when(spaceMissionRepository.findAll(spaceMissionExample, pageRequest));
 
         Page<SpaceMission> spaceMissionPage = spaceMissionService.findAll(entitySample, pageRequest);
 
         //Assert
         //Assert collection
-        assertNotNull(spaceMissionPage);
-        assertEquals(3, spaceMissionPage.getNumberOfElements());
-        assertEquals(5, spaceMissionPage.getTotalElements());
-        assertNotNull(spaceMissionPage.getContent());
 
         //Assert first spaceship
-        assertNotNull(spaceMissionPage.getContent().get(0));
-        assertNotNull(spaceMissionPage.getContent().get(0));
-        assertEquals(1L, spaceMissionPage.getContent().get(0).getId());
-        assertEquals("Retrieve the Millennium Falcon", spaceMissionPage.getContent().get(0).getName());
-        assertNull(spaceMissionPage.getContent().get(0).getDetails());
-        assertEquals(2L, spaceMissionPage.getContent().get(0).getSpaceShipId());
-        assertEquals(SpaceMissionStatus.IN_PROGRESS, spaceMissionPage.getContent().get(0).getStatus());
-        assertEquals(0, BigDecimal.valueOf(10000L).compareTo(spaceMissionPage.getContent().get(0).getRevenue()));
 
         //Assert second spaceship
-        assertNotNull(spaceMissionPage.getContent().get(1));
-        assertEquals(2L, spaceMissionPage.getContent().get(1).getId());
-        assertEquals("Retrieve the Red Fox", spaceMissionPage.getContent().get(1).getName());
-        assertNull(spaceMissionPage.getContent().get(1).getDetails());
-        assertEquals(1L, spaceMissionPage.getContent().get(1).getSpaceShipId());
-        assertEquals(SpaceMissionStatus.NOT_IN_PROGRESS, spaceMissionPage.getContent().get(1).getStatus());
-        assertEquals(0, BigDecimal.valueOf(1000L).compareTo(spaceMissionPage.getContent().get(1).getRevenue()));
 
         //Assert third spaceship
-        assertNotNull(spaceMissionPage.getContent().get(2));
-        assertEquals(3L, spaceMissionPage.getContent().get(2).getId());
-        assertEquals("Destroy the Death Star", spaceMissionPage.getContent().get(2).getName());
-        assertEquals("Blow it up!", spaceMissionPage.getContent().get(2).getDetails());
-        assertEquals(1L, spaceMissionPage.getContent().get(2).getSpaceShipId());
-        assertEquals(SpaceMissionStatus.ACCOMPLISHED, spaceMissionPage.getContent().get(2).getStatus());
-        assertEquals(0, BigDecimal.valueOf(0L).compareTo(spaceMissionPage.getContent().get(2).getRevenue()));
 
     }
 
@@ -200,20 +149,13 @@ class SpaceOverSpaceMissionServiceTest {
                 .status(SpaceMissionStatus.IN_PROGRESS)
                 .build();
 
-        when(spaceMissionRepository.findById(1L)).thenReturn(Optional.of(spaceMission));
+        when(spaceMissionRepository.findById(1L));
 
         //Act
         spaceMission = spaceMissionService.findBydId(1L);
 
         //Assert
         //Assert spaceship
-        assertNotNull(spaceMission);
-        assertEquals(1L, spaceMission.getId());
-        assertEquals("Retrieve the Millennium Falcon", spaceMission.getName());
-        assertNull(spaceMission.getDetails());
-        assertEquals(2L, spaceMission.getSpaceShipId());
-        assertEquals(SpaceMissionStatus.IN_PROGRESS, spaceMission.getStatus());
-        assertEquals(0, BigDecimal.valueOf(10000L).compareTo(spaceMission.getRevenue()));
 
     }
 
@@ -222,11 +164,11 @@ class SpaceOverSpaceMissionServiceTest {
     void findBydIdThrowEntityNotFound() {
 
         //Arrange
-        when(spaceMissionRepository.findById(1L)).thenReturn(Optional.empty());
+        when(spaceMissionRepository.findById(1L));
 
         //Act & Assert
         //Assert exception
-        assertThrows(EntityNotFoundException.class, () -> spaceMissionService.findBydId(1L), String.format(ENTITY_NOT_FOUND_MSG, SPACE_MISSION, "1"));
+        assertThrows(null, () -> spaceMissionService.findBydId(1L), "null");
 
     }
 
@@ -252,22 +194,15 @@ class SpaceOverSpaceMissionServiceTest {
                 .status(SpaceMissionStatus.IN_PROGRESS)
                 .build();
 
-        when(spaceMissionRepository.save(spaceMission)).thenReturn(persistedSpaceMission);
+        when(spaceMissionRepository.save(spaceMission));
 
         //Act
         spaceMission = spaceMissionService.save(spaceMission);
 
         //Assert
-        verify(spaceShipClient).findBydId(2L);
 
         //Assert spaceship
-        assertNotNull(spaceMission);
-        assertEquals(1L, spaceMission.getId());
-        assertEquals("Retrieve the Millennium Falcon", spaceMission.getName());
-        assertNull(spaceMission.getDetails());
-        assertEquals(2L, spaceMission.getSpaceShipId());
-        assertEquals(SpaceMissionStatus.IN_PROGRESS, spaceMission.getStatus());
-        assertEquals(0, BigDecimal.valueOf(10000L).compareTo(spaceMission.getRevenue()));
+
 
     }
 
@@ -288,16 +223,9 @@ class SpaceOverSpaceMissionServiceTest {
         //Act
         spaceMission = spaceMissionService.update(spaceMission);
         //Assert
-        verify(spaceShipClient).findBydId(2L);
 
         //Assert spaceship
-        assertNotNull(spaceMission);
-        assertEquals(1L, spaceMission.getId());
-        assertEquals("Retrieve the Millennium Falcon", spaceMission.getName());
-        assertNull(spaceMission.getDetails());
-        assertEquals(2L, spaceMission.getSpaceShipId());
-        assertEquals(SpaceMissionStatus.IN_PROGRESS, spaceMission.getStatus());
-        assertEquals(0, BigDecimal.valueOf(10000L).compareTo(spaceMission.getRevenue()));
+
     }
 
     @Test
@@ -308,7 +236,6 @@ class SpaceOverSpaceMissionServiceTest {
         spaceMissionService.deleteById(1L);
         //Assert
         //verify method call count
-        verify(spaceMissionRepository, times(1)).deleteById(1L);
 
     }
 }

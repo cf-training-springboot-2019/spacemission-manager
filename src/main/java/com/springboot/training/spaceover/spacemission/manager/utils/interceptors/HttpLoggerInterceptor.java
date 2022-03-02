@@ -24,17 +24,16 @@ public class HttpLoggerInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         stopWatch = new StopWatch();
-        log.info(LOGGING_HANDLER_INBOUND_MSG, request.getMethod(), request.getRequestURI(),
-                Instant.now());
+        //LT5.1-Add logging for inbound request processing
         stopWatch.start();
         return true;
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-        log.info(LOGGING_HANDLER_OUTBOUND_MSG, response.getStatus(), Instant.now());
+        //LT5.2-Add logging for outbound response result
         stopWatch.stop();
-        log.info(LOGGING_HANDLER_PROCESS_TIME_MSG, stopWatch.getTotalTimeMillis());
+        //LT5.3-Add logging for inbound request processing duration
     }
 
 }

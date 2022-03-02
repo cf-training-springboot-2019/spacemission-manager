@@ -50,33 +50,25 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest
+//LT10-3-Add integration test to the exposure layer
 @ActiveProfiles("test")
 class SpaceOverSpaceMissionControllerTest {
 
 
-    @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
     private SpaceMissionService spaceMissionService;
 
-    @MockBean
     private ModelMapper modelMapper;
 
-    @MockBean
     private PagedResourcesAssembler<SpaceMission> pagedModelAssembler;
 
-    @MockBean
     private PaginationModelAssembler modelAssembler;
 
-    @MockBean
     private SpaceMissionManagerProperties spaceMissionManagerProperties;
 
-    @Autowired
     private HttpHeaderEnrichmentInterceptor httpHeaderEnrichmentInterceptor;
 
-    @Autowired
     private MdcInitInterceptor mdcInitInterceptor;
 
     @Value("classpath:samples/requests/createSpaceMission201.json")
@@ -161,37 +153,13 @@ class SpaceOverSpaceMissionControllerTest {
         Page<SpaceMission> spaceMissionPage = new PageImpl<>(spaceMissionList, pageRequest, 5);
 
         PagedModel<GetSpaceMissionResponse> response = PagedModel.of(spaceMissionResponseList, new PagedModel.PageMetadata(20, 0, 3, 1));
-        when(spaceMissionService.findAll(spaceMissionSample, pageRequest)).thenReturn(spaceMissionPage);
-        when(pagedModelAssembler.toModel(eq(spaceMissionPage), any(PaginationModelAssembler.class))).thenReturn(response);
+        when(spaceMissionService.findAll(spaceMissionSample, pageRequest));
+        when(pagedModelAssembler.toModel(eq(spaceMissionPage), any(PaginationModelAssembler.class)));
 
         //Act & Assert
         mockMvc.perform(get("/missions")
                 .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(header().exists(TRACE_ID_HEADER))
-                .andExpect(header().string(SERVICE_OPERATION_HEADER, GET_SPACE_MISSIONS_SERVICE_OPERATION))
-                .andExpect(header().string(CONTENT_TYPE, MediaType.APPLICATION_JSON.toString()))
-                .andExpect(jsonPath("$._embedded.getSpaceMissionResponses[0].id").value(1))
-                .andExpect(jsonPath("$._embedded.getSpaceMissionResponses[0].name").value("Retrieve the Millennium Falcon"))
-                .andExpect(jsonPath("$._embedded.getSpaceMissionResponses[0].status").value("IN_PROGRESS"))
-                .andExpect(jsonPath("$._embedded.getSpaceMissionResponses[0].spaceShipId").value(2))
-                .andExpect(jsonPath("$._embedded.getSpaceMissionResponses[0].revenue").value(10000))
-                .andExpect(jsonPath("$._embedded.getSpaceMissionResponses[1].id").value(2))
-                .andExpect(jsonPath("$._embedded.getSpaceMissionResponses[1].name").value("Retrieve the Red Fox"))
-                .andExpect(jsonPath("$._embedded.getSpaceMissionResponses[1].status").value("NOT_IN_PROGRESS"))
-                .andExpect(jsonPath("$._embedded.getSpaceMissionResponses[1].spaceShipId").value(1))
-                .andExpect(jsonPath("$._embedded.getSpaceMissionResponses[1].revenue").value(1000))
-                .andExpect(jsonPath("$._embedded.getSpaceMissionResponses[2].id").value(3))
-                .andExpect(jsonPath("$._embedded.getSpaceMissionResponses[2].name").value("Destroy the Death Star"))
-                .andExpect(jsonPath("$._embedded.getSpaceMissionResponses[2].details").value("Blow it up!"))
-                .andExpect(jsonPath("$._embedded.getSpaceMissionResponses[2].status").value("ACCOMPLISHED"))
-                .andExpect(jsonPath("$._embedded.getSpaceMissionResponses[2].spaceShipId").value(1))
-                .andExpect(jsonPath("$._embedded.getSpaceMissionResponses[2].revenue").value(0))
-                .andExpect(jsonPath("$.page.number").value(0))
-                .andExpect(jsonPath("$.page.size").value(20))
-                .andExpect(jsonPath("$.page.totalElements").value(3))
-                .andExpect(jsonPath("$.page.totalPages").value(1));
+                .contentType(MediaType.APPLICATION_JSON));
 
     }
 
@@ -216,21 +184,12 @@ class SpaceOverSpaceMissionControllerTest {
                 .status(SpaceMissionStatus.IN_PROGRESS)
                 .build();
 
-        when(spaceMissionService.findBydId(1L)).thenReturn(spaceMission);
-        when(modelMapper.map(spaceMission, GetSpaceMissionResponse.class)).thenReturn(response);
+        when(spaceMissionService.findBydId(1L));
+        when(modelMapper.map(spaceMission, GetSpaceMissionResponse.class));
         //Act & Assert
         mockMvc.perform(get("/missions/1")
                 .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(header().exists(TRACE_ID_HEADER))
-                .andExpect(header().string(SERVICE_OPERATION_HEADER, GET_SPACE_MISSION_SERVICE_OPERATION))
-                .andExpect(header().string(CONTENT_TYPE, MediaType.APPLICATION_JSON.toString()))
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.name").value("Retrieve the Millennium Falcon"))
-                .andExpect(jsonPath("$.status").value("IN_PROGRESS"))
-                .andExpect(jsonPath("$.spaceShipId").value(2))
-                .andExpect(jsonPath("$.revenue").value(10000));
+                .contentType(MediaType.APPLICATION_JSON));
 
     }
 
@@ -239,20 +198,11 @@ class SpaceOverSpaceMissionControllerTest {
     @DisplayName("Given a consumer client, when invoking GET /missions/{id} with none-existent identifier, then reply 404 response")
     void getSpaceMissionNotFound() {
         //Arrange
-        when(spaceMissionService.findBydId(1L))
-                .thenThrow(new EntityNotFoundException(String.format(ENTITY_NOT_FOUND_MSG, SPACE_MISSION, 1L)));
+        when(spaceMissionService.findBydId(1L));
         //Arrange
         mockMvc.perform(get("/missions/1")
                 .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound())
-                .andExpect(header().exists(TRACE_ID_HEADER))
-                .andExpect(header().string(SERVICE_OPERATION_HEADER, GET_SPACE_MISSION_SERVICE_OPERATION))
-                .andExpect(header().string(CONTENT_TYPE, MediaType.APPLICATION_JSON.toString()))
-                .andExpect(jsonPath("$.reason").value(HttpStatus.NOT_FOUND.getReasonPhrase()))
-                .andExpect(jsonPath("$.code").value(HttpStatus.NOT_FOUND.value()))
-                .andExpect(jsonPath("$.status").value(HttpStatus.NOT_FOUND.value()))
-                .andExpect(jsonPath("$.message").value(String.format(ENTITY_NOT_FOUND_MSG, SPACE_MISSION, 1L)));
+                .contentType(MediaType.APPLICATION_JSON));
 
     }
 
@@ -285,17 +235,13 @@ class SpaceOverSpaceMissionControllerTest {
 
         String responseContent = FileCopyUtils.copyToString(new FileReader(createSpaceMission201Request.getFile()));
 
-        when(modelMapper.map(request, SpaceMission.class)).thenReturn(spaceMission);
-        when(spaceMissionService.save(spaceMission)).thenReturn(persistedSpaceMission);
+        when(modelMapper.map(request, SpaceMission.class));
+        when(spaceMissionService.save(spaceMission));
         //Arrange
         mockMvc.perform(post("/missions")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(responseContent))
-                .andExpect(status().isCreated())
-                .andExpect(header().exists(TRACE_ID_HEADER))
-                .andExpect(header().string(SERVICE_OPERATION_HEADER, CREATE_SPACE_MISSION_SERVICE_OPERATION))
-                .andExpect(header().string(LOCATION, "http://localhost/missions/1"));
+                .content(responseContent));
 
     }
 
@@ -309,16 +255,7 @@ class SpaceOverSpaceMissionControllerTest {
         mockMvc.perform(post("/missions")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(responseContent))
-                .andExpect(status().isBadRequest())
-                .andExpect(header().exists(TRACE_ID_HEADER))
-                .andExpect(header().string(SERVICE_OPERATION_HEADER, CREATE_SPACE_MISSION_SERVICE_OPERATION))
-                .andExpect(header().string(CONTENT_TYPE, MediaType.APPLICATION_JSON.toString()))
-                .andExpect(jsonPath("$.reason").value(HttpStatus.BAD_REQUEST.getReasonPhrase()))
-                .andExpect(jsonPath("$.code").value(HttpStatus.BAD_REQUEST.value()))
-                .andExpect(jsonPath("$.status").value(HttpStatus.BAD_REQUEST.value()))
-                .andExpect(jsonPath("$.message").value(containsString("name must not be null")))
-                .andExpect(jsonPath("$.message").value(containsString("name must not be empty")));
+                .content(responseContent));
 
     }
 
@@ -353,24 +290,14 @@ class SpaceOverSpaceMissionControllerTest {
 
         String responseContent = FileCopyUtils.copyToString(new FileReader(patchSpaceMission200Request.getFile()));
 
-        when(spaceMissionService.findBydId(1L)).thenReturn(spaceMission);
-        when(spaceMissionService.update(patchedSpaceMission)).thenReturn(patchedSpaceMission);
-        when(modelMapper.map(patchedSpaceMission, PatchSpaceMissionResponse.class)).thenReturn(response);
+        when(spaceMissionService.findBydId(1L));
+        when(spaceMissionService.update(patchedSpaceMission));
+        when(modelMapper.map(patchedSpaceMission, PatchSpaceMissionResponse.class));
         //Act & Assert
         mockMvc.perform(patch("/missions/1")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(APPLICATION_JSON_PATCH)
-                .content(responseContent))
-                .andExpect(status().isOk())
-                .andExpect(header().exists(TRACE_ID_HEADER))
-                .andExpect(header().string(SERVICE_OPERATION_HEADER, PATCH_SPACE_MISSION_SERVICE_OPERATION))
-                .andDo(print())
-                .andExpect(header().string(CONTENT_TYPE, MediaType.APPLICATION_JSON.toString()))
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.name").value("Retrieve the Millennium Falcon"))
-                .andExpect(jsonPath("$.status").value("ACCOMPLISHED"))
-                .andExpect(jsonPath("$.spaceShipId").value(2))
-                .andExpect(jsonPath("$.revenue").value(1));
+                .content(responseContent));
 
     }
 
@@ -405,23 +332,14 @@ class SpaceOverSpaceMissionControllerTest {
 
         String responseContent = FileCopyUtils.copyToString(new FileReader(putSpaceMission200Request.getFile()));
 
-        when(modelMapper.map(request, SpaceMission.class)).thenReturn(spaceMission);
-        when(spaceMissionService.update(spaceMission)).thenReturn(spaceMission);
-        when(modelMapper.map(spaceMission, PutSpaceMissionResponse.class)).thenReturn(response);
+        when(modelMapper.map(request, SpaceMission.class));
+        when(spaceMissionService.update(spaceMission));
+        when(modelMapper.map(spaceMission, PutSpaceMissionResponse.class));
         //Act & Assert
         mockMvc.perform(put("/missions/1")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(responseContent))
-                .andExpect(status().isOk())
-                .andExpect(header().exists(TRACE_ID_HEADER))
-                .andExpect(header().string(SERVICE_OPERATION_HEADER, PUT_SPACE_MISSION_SERVICE_OPERATION))
-                .andExpect(header().string(CONTENT_TYPE, MediaType.APPLICATION_JSON.toString()))
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.name").value("Retrieve the Millennium Falcon"))
-                .andExpect(jsonPath("$.status").value("ACCOMPLISHED"))
-                .andExpect(jsonPath("$.spaceShipId").value(2))
-                .andExpect(jsonPath("$.revenue").value(10000));
+                .content(responseContent));
 
     }
 
@@ -435,15 +353,7 @@ class SpaceOverSpaceMissionControllerTest {
         mockMvc.perform(put("/missions/1")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(responseContent))
-                .andExpect(status().isBadRequest())
-                .andExpect(header().exists(TRACE_ID_HEADER))
-                .andExpect(header().string(SERVICE_OPERATION_HEADER, PUT_SPACE_MISSION_SERVICE_OPERATION))
-                .andExpect(header().string(CONTENT_TYPE, MediaType.APPLICATION_JSON.toString()))
-                .andExpect(jsonPath("$.reason").value(HttpStatus.BAD_REQUEST.getReasonPhrase()))
-                .andExpect(jsonPath("$.code").value(HttpStatus.BAD_REQUEST.value()))
-                .andExpect(jsonPath("$.status").value(HttpStatus.BAD_REQUEST.value()))
-                .andExpect(jsonPath("$.message").value(containsString("name must not be empty")));
+                .content(responseContent));
     }
 
     @Test
@@ -452,10 +362,7 @@ class SpaceOverSpaceMissionControllerTest {
     void deleteSpaceCrewMemberNoContent() {
         //No Arrange required
         //Act & Assert
-        mockMvc.perform(delete("/missions/1"))
-                .andExpect(status().isNoContent())
-                .andExpect(header().exists(TRACE_ID_HEADER))
-                .andExpect(header().string(SERVICE_OPERATION_HEADER, DELETE_SPACE_MISSION_SERVICE_OPERATION));
+        mockMvc.perform(delete("/missions/1"));
 
     }
 }
