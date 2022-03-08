@@ -1,13 +1,15 @@
 package com.springboot.training.spaceover.spacemission.manager.utils.interceptors;
 
-import org.slf4j.MDC;
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.HandlerInterceptor;
+import static com.springboot.training.spaceover.spacemission.manager.utils.constants.SpaceMissionManagerConstant.SERVICE_OPERATION;
+import static com.springboot.training.spaceover.spacemission.manager.utils.constants.SpaceMissionManagerConstant.SERVICE_OPERATION_HEADER;
+import static com.springboot.training.spaceover.spacemission.manager.utils.constants.SpaceMissionManagerConstant.TRACE_ID;
+import static com.springboot.training.spaceover.spacemission.manager.utils.constants.SpaceMissionManagerConstant.TRACE_ID_HEADER;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import static com.springboot.training.spaceover.spacemission.manager.utils.constants.SpaceMissionManagerConstant.*;
+import org.slf4j.MDC;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
 public class HttpHeaderEnrichmentInterceptor implements HandlerInterceptor {

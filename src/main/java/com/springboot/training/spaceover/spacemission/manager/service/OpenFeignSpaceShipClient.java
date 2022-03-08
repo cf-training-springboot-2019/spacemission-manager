@@ -13,4 +13,5 @@ public interface OpenFeignSpaceShipClient extends SpaceShipClient {
     @GetMapping("spaceships/{id}")
     GetSpaceShipResponse findBydId(@PathVariable("id") Long id);
 
+
 }

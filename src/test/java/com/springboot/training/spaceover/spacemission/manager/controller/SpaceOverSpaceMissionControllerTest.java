@@ -1,5 +1,32 @@
 package com.springboot.training.spaceover.spacemission.manager.controller;
 
+import static com.springboot.training.spaceover.spacemission.manager.utils.constants.SpaceMissionManagerConstant.APPLICATION_JSON_PATCH;
+import static com.springboot.training.spaceover.spacemission.manager.utils.constants.SpaceMissionManagerConstant.CREATE_SPACE_MISSION_SERVICE_OPERATION;
+import static com.springboot.training.spaceover.spacemission.manager.utils.constants.SpaceMissionManagerConstant.DELETE_SPACE_MISSION_SERVICE_OPERATION;
+import static com.springboot.training.spaceover.spacemission.manager.utils.constants.SpaceMissionManagerConstant.ENTITY_NOT_FOUND_MSG;
+import static com.springboot.training.spaceover.spacemission.manager.utils.constants.SpaceMissionManagerConstant.GET_SPACE_MISSIONS_SERVICE_OPERATION;
+import static com.springboot.training.spaceover.spacemission.manager.utils.constants.SpaceMissionManagerConstant.GET_SPACE_MISSION_SERVICE_OPERATION;
+import static com.springboot.training.spaceover.spacemission.manager.utils.constants.SpaceMissionManagerConstant.PATCH_SPACE_MISSION_SERVICE_OPERATION;
+import static com.springboot.training.spaceover.spacemission.manager.utils.constants.SpaceMissionManagerConstant.PUT_SPACE_MISSION_SERVICE_OPERATION;
+import static com.springboot.training.spaceover.spacemission.manager.utils.constants.SpaceMissionManagerConstant.SERVICE_OPERATION_HEADER;
+import static com.springboot.training.spaceover.spacemission.manager.utils.constants.SpaceMissionManagerConstant.SPACE_MISSION;
+import static com.springboot.training.spaceover.spacemission.manager.utils.constants.SpaceMissionManagerConstant.TRACE_ID_HEADER;
+import static org.hamcrest.Matchers.containsString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
+import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
+import static org.springframework.http.HttpHeaders.LOCATION;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.springboot.training.spaceover.spacemission.manager.domain.model.SpaceMission;
 import com.springboot.training.spaceover.spacemission.manager.domain.request.inbound.CreateSpaceMissionRequest;
 import com.springboot.training.spaceover.spacemission.manager.domain.request.inbound.PutSpaceMissionRequest;
@@ -12,6 +39,11 @@ import com.springboot.training.spaceover.spacemission.manager.utils.assemblers.P
 import com.springboot.training.spaceover.spacemission.manager.utils.interceptors.HttpHeaderEnrichmentInterceptor;
 import com.springboot.training.spaceover.spacemission.manager.utils.interceptors.MdcInitInterceptor;
 import com.springboot.training.spaceover.spacemission.manager.utils.properties.SpaceMissionManagerProperties;
+import java.io.FileReader;
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
+import javax.persistence.EntityNotFoundException;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,23 +64,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.FileCopyUtils;
-
-import javax.persistence.EntityNotFoundException;
-import java.io.FileReader;
-import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.List;
-
-import static com.springboot.training.spaceover.spacemission.manager.utils.constants.SpaceMissionManagerConstant.*;
-import static org.hamcrest.Matchers.containsString;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
-import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
-import static org.springframework.http.HttpHeaders.LOCATION;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest
 @ActiveProfiles("test")
