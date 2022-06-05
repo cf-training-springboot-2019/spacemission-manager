@@ -1,0 +1,7 @@
+currency:
+  conversion:
+    id: rm
+    converter:
+      rm:
+        coin: schmeckles
+        rate: 150
