@@ -9,10 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
-@RequiredArgsConstructor
 public class SpaceShipClientConfiguration {
-
-    private final SpaceMissionManagerProperties spaceMissionManagerProperties;
 
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
@@ -23,7 +20,7 @@ public class SpaceShipClientConfiguration {
 
     @Bean
     public WebClient webClient() {
-        return WebClient.builder().baseUrl(spaceMissionManagerProperties.getSpaceshipManagerBaseUrl()).build();
+        return WebClient.builder().build();
     }
 
 
